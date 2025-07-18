@@ -8,6 +8,12 @@
 
 dot means ./
 
+## motivation & changes from original  
+
+`C:\> pip install editdistance` currently doesn't work on CJK Windows because native programming language for Windows is C/C++ and string manipulation in C/C++ is done through directly manipulating C arrays hence legacy programs that manipulate string any shape or form needs to have compiling source rewritten and recompiled if they were to hypothetically support UTF-8 and therefore CJK systems are stuck with pre-UTF8 language-specific encoding for string formats which are at least backwards compatible with ASCII but anything outside ASCII && outside codepages of specific CJK languages the system is configured for will break it and make even MSVC compiler crash and burn if specific CJK languages support was correctly enabled at application side which is still a dice roll.
+
+The only changes made was to delete non-ASCII comments. Not tested beyond compiling and installing once.
+
 ----------------------
 
 # editdistance
