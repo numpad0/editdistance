@@ -60,9 +60,9 @@ unsigned int edit_distance_bpv(T &cmap, int64_t const *vec, size_t const &vecsiz
 }
 
 
-/// c.f. http://handasse.blogspot.com/2009/04/c_29.html
+
 unsigned int edit_distance_dp(int64_t const *str1, size_t const size1, int64_t const *str2, size_t const size2) {
-    // vectorより固定長配列の方が速いが、文字列が長い時の保険でのみ呼ばれるのでサイズを決め打ちできない
+
     vector< vector<uint32_t> > d(2, vector<uint32_t>(size2 + 1));
     d[0][0] = 0;
     d[1][0] = 1;
@@ -124,14 +124,14 @@ unsigned int edit_distance_map_(int64_t const *a, size_t const asize, int64_t co
 unsigned int edit_distance(const int64_t *a, const unsigned int asize, const int64_t *b, const unsigned int bsize) {
     if(asize == 0) return bsize;
     else if(bsize == 0) return asize;
-    // 要素数の大きいほうがa
+
     int64_t const *ap, *bp;
     unsigned int const *asizep, *bsizep;
     if(asize < bsize) ap = b, bp = a, asizep = &bsize, bsizep = &asize;
     else ap = a, bp = b, asizep = &asize, bsizep = &bsize;
-    // 必要な配列サイズを調べる
-    size_t vsize = ((*asizep - 1) >> 6) + 1;  // 64までは1, 128までは2, ...
-    // bit-parallelでできそうな限界を超えたら要素数の小さい方をaとする。
+
+    size_t vsize = ((*asizep - 1) >> 6) + 1;
+
     if(vsize > 10) {
         int64_t const *_ = ap;
         unsigned int const *__ = asizep;
@@ -149,20 +149,20 @@ unsigned int edit_distance(const int64_t *a, const unsigned int asize, const int
     else if(vsize == 8) return edit_distance_map_<8>(ap, *asizep, bp, *bsizep);
     else if(vsize == 9) return edit_distance_map_<9>(ap, *asizep, bp, *bsizep);
     else if(vsize == 10) return edit_distance_map_<10>(ap, *asizep, bp, *bsizep);
-    return edit_distance_dp(ap, *asizep, bp, *bsizep);  // dynamic programmingに任せる
+    return edit_distance_dp(ap, *asizep, bp, *bsizep);
 }
 
 bool edit_distance_criterion(const int64_t *a, const unsigned int asize, const int64_t *b, const unsigned int bsize, const unsigned int thr) {
     if(asize == 0) return bsize <= thr;
     if(bsize == 0) return asize <= thr;
-    // 要素数の大きいほうがa
+
     int64_t const *ap, *bp;
     unsigned int const *asizep, *bsizep;
     if(asize < bsize) ap = b, bp = a, asizep = &bsize, bsizep = &asize;
     else ap = a, bp = b, asizep = &asize, bsizep = &bsize;
-    // 必要な配列サイズを調べる
-    size_t vsize = ((*asizep - 1) >> 6) + 1;  // 64までは1, 128までは2, ...
-    // bit-parallelでできそうな限界を超えたら要素数の小さい方をaとする。
+
+    size_t vsize = ((*asizep - 1) >> 6) + 1;
+
     if(vsize > 10) {
         int64_t const *_ = ap;
         unsigned int const *__ = asizep;
@@ -170,7 +170,7 @@ bool edit_distance_criterion(const int64_t *a, const unsigned int asize, const i
         vsize = ((*asizep - 1) >> 6) + 1;
     }
 
-    return edit_distancec_dp<int64_t>(ap, *asizep, bp, *bsizep, thr);  // dynamic programmingに任せる
+    return edit_distancec_dp<int64_t>(ap, *asizep, bp, *bsizep, thr);
 }
 
 
