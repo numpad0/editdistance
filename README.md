@@ -1,3 +1,15 @@
+# editdistance compilation workaround fork
+
+## usage
+
+> git clone <this>  
+> cd <this>  
+> pip install .
+
+dot means ./
+
+----------------------
+
 # editdistance
 
 Fast implementation of the edit distance (Levenshtein distance).
